@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary-container": "#a8e7c5",
+                        "tertiary": "#713900",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#404943",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#92f7c3",
+                        "primary-fixed": "#b1f0ce",
+                        "outline-variant": "#bfc9c1",
+                        "on-surface": "#121c2a",
+                        "secondary-container": "#92f7c3",
+                        "on-tertiary-fixed-variant": "#6f3800",
+                        "tertiary-container": "#8f4f14",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#0e5138",
+                        "on-tertiary-container": "#ffd1b1",
+                        "tertiary-fixed": "#ffdcc4",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed": "#002114",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff",
+                        "primary-container": "#2d6a4f",
+                        "on-error": "#ffffff",
+                        "on-background": "#121c2a",
+                        "on-error-container": "#93000a",
+                        "primary": "#0f5238",
+                        "on-secondary-fixed-variant": "#005235",
+                        "secondary": "#006c48",
+                        "on-tertiary-fixed": "#2f1400",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#75daa8",
+                        "surface-bright": "#f8f9ff",
+                        "surface-tint": "#2c694e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb780",
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary-container": "#00734d",
+                        "outline": "#707973",
+                        "inverse-primary": "#95d4b3",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "surface-variant": "#d9e3f6",
+                        "primary-fixed-dim": "#95d4b3",
+                        "inverse-surface": "#27313f",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-dim": "#d0dbed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xl": "40px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "margin-desktop": "48px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .hero-split { min-height: 100vh; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 4s ease-in-out 2s infinite; }
+    </style>
+</head>
+<body class="text-on-surface">
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center h-20 px-margin-desktop bg-surface/80 backdrop-blur-md">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">Padosi</span>
+</div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">How it works</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Neighborhoods</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Safety</a>
+<button class="bg-primary px-6 py-2.5 rounded-full text-white font-label-md text-label-md hover:scale-[1.05] transition-transform active:scale-[0.98]">Login</button>
+</div>
+</nav>
+<main class="hero-split flex flex-col md:flex-row pt-20 overflow-hidden">
+<section class="w-full md:w-1/2 flex flex-col justify-center px-margin-mobile md:px-margin-desktop py-stack-xl">
+<div class="max-w-[580px] flex flex-col gap-stack-md">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 text-secondary w-fit rounded-full">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm">Verified Resident Network</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary leading-tight">
+                    Connect with your colony in a meaningful way.
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                    Padosi brings the warmth of traditional neighborhoods to the digital age. Join thousands of verified neighbors in Greenwood Estates for local updates, services, and trust.
+                </p>
+<div class="flex flex-col sm:flex-row gap-stack-sm mt-stack-md">
+<button class="bg-primary text-white font-label-md text-label-md px-8 py-4 rounded-xl shadow-[0px_8px_24px_rgba(45,106,79,0.2)] hover:scale-[1.02] transition-transform active:scale-[0.98] flex items-center justify-center gap-2">
+                        Join your neighborhood
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="bg-surface-container-high text-primary font-label-md text-label-md px-8 py-4 rounded-xl hover:bg-surface-container-highest transition-colors flex items-center justify-center">
+                        Explore Local Directory
+                    </button>
+</div>
+<div class="grid grid-cols-2 gap-stack-lg mt-stack-xl pt-stack-xl border-t border-outline-variant/30">
+<div>
+<p class="font-headline-sm text-headline-sm text-primary">12,000+</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Neighbors connected</p>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary">450+</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Local colonies active</p>
+</div>
+</div>
+<div class="mt-stack-xl p-stack-md bg-surface-container-low rounded-2xl border border-outline-variant/20 flex gap-stack-md">
+<img alt="Resident testimonial" class="w-12 h-12 rounded-full object-cover shrink-0" data-alt="A portrait of a smiling middle-aged Indian woman with a warm, friendly expression, wearing a bright cotton sari. She is standing in a sun-drenched balcony filled with green potted plants. The lighting is soft and golden, characteristic of a pleasant late afternoon. The overall mood is peaceful and communal, emphasizing domestic comfort and neighborhood trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoC_aWJ94OJAqc1-xc6B-OnuiZc0GJnUTmSdc_UghpGQ-bdaT_kH-YqNh30ZwuMek1Bg2AqPJ0vGQgYbfJ4RCf2Wunx9r8mWSohBn7di_MabyvkzVh_LzM8mI-jQTJh7buueFTXrdqqDpPsuu_Av-NvI5hhRuwpinq0iEwMWCGCR5GdgUqb-krtrSTzDJhWdxAHiD--YurDrNAJbe7kH0emprvYZ-a9U3CBBO1_jo9ABNk7DEThAK_myFw2RCcurjj1muXjphCaww"/>
+<div>
+<p class="font-body-md text-body-md italic text-on-surface">"Padosi helped me find a trusted nanny within hours. It feels like the old days when we actually knew our neighbors."</p>
+<p class="font-label-sm text-label-sm text-primary mt-1">— Ananya S., Orchid Tower</p>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full md:w-1/2 relative min-h-[500px] md:min-h-0 bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<img alt="Modern Indian urban neighborhood" class="w-full h-full object-cover" data-alt="A high-fidelity digital illustration of a modern Indian urban neighborhood at sunrise. Elegant apartment complexes with large glass balconies are surrounded by lush green parks, walking paths, and flowering trees. Small groups of diverse people—families walking, a person jogging, and neighbors talking—populate the scene. The color palette features soft greens, terracotta, and cerulean blues, bathed in a warm, optimistic morning light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8sYvw9yfyeV94Jx5ThnatH8EAY2KQZzbIkKdKwx691ZspvtRbKWMMq8O6E_xTz90ghRbrbWsjq_F4lPNZ9T68nTPKMcnACkiuc-DDbwz6B1NbJQCZhJhGuHvoa-0p2QcQbAhJWUKgnhlDDKAHa4h99TlNL34bpUVOaGQaj7ruf1QhITQAn3NVkFrf1pAL0nqbOYCHDE-uAb9EzmZ9PJ-VET-XHqmX2w4MKmF8lBvpq1_j59VVYKBf_dTOri6N-Lncl5KmTgykQHo"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent hidden md:block"></div>
+</div>
+<div class="absolute inset-0 flex flex-col items-center justify-center p-margin-mobile z-10 gap-stack-md pointer-events-none">
+<div class="glass-card w-full max-w-[340px] p-stack-md rounded-2xl shadow-xl animate-float pointer-events-auto">
+<div class="flex items-center gap-2 mb-stack-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm leading-none">Security Alert</p>
+<p class="text-[10px] text-on-surface-variant">2 mins ago • My Colony</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm mb-2 text-on-surface">Street lamp at Gate 3 is flickering. Reported to RWA!</p>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-surface-container-high rounded-full text-[10px] font-label-sm text-on-surface-variant">12 Thanks</span>
+<span class="px-2 py-1 bg-surface-container-high rounded-full text-[10px] font-label-sm text-on-surface-variant">4 Replies</span>
+</div>
+</div>
+<div class="glass-card w-full max-w-[340px] p-stack-md rounded-2xl shadow-xl animate-float-delayed ml-12 pointer-events-auto">
+<div class="flex items-center gap-2 mb-stack-sm">
+<img alt="Post author" class="w-8 h-8 rounded-full object-cover" data-alt="A professional close-up of a young Indian man in a casual white linen shirt, smiling confidently. The background is a soft-focus urban park setting with warm, dappled sunlight. The style is clean, modern, and trustworthy, fitting for a community-based social platform profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiYbGHp6_1DYnS5duenj4EliP_e4AAUEHgR1_TGimJmkAoOXokmbtJAQDO7cX6rPisxLyio9nmurIsqijOBo5OEpAN9pFWoz3-R0JldyRUfPzFMZUOXQY46iseMAQGQ8xPElUgNsVA29VOWbIwn9wAtvatTr4EzjpQYWUPqP0YFNFyQdVCwIV4fN9iPMzplmzxiWa8aaXh4zj0LLahPeJLN2cujtBncIodV6nGokelMrn4OqdHwxTOxlNCAnGnXozU-8pBE83x75Y"/>
+<div>
+<p class="font-label-sm text-label-sm leading-none">Rajiv Malhotra</p>
+<p class="text-[10px] text-on-surface-variant">1 hour ago • Recommendations</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Anyone have a contact for a reliable plumber? The one from last week didn't show up.</p>
+<div class="mt-3 p-2 bg-primary/5 rounded-lg border border-primary/10">
+<p class="text-[11px] font-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lightbulb</span>
+                            Anil's Repairs is highly rated nearby!
+                        </p>
+</div>
+</div>
+<div class="glass-card w-full max-w-[340px] p-stack-md rounded-2xl shadow-xl animate-float -ml-8 pointer-events-auto">
+<div class="flex items-center gap-2 mb-stack-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[18px]">celebration</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm leading-none">Community Event</p>
+<p class="text-[10px] text-on-surface-variant">Tomorrow • Clubhouse</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Diwali potluck planning session at 6 PM. Bring ideas!</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-lowest py-stack-xl px-margin-mobile md:px-margin-desktop border-t border-outline-variant/30">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-start gap-stack-xl">
+<div class="max-w-[300px]">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">Padosi</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                    Creating safer, friendlier, and more connected neighborhoods across India. Join the movement.
+                </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-stack-xl">
+<div class="flex flex-col gap-2">
+<p class="font-label-md text-label-md text-on-surface font-bold">Company</p>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">About Us</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Careers</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Privacy</a>
+</div>
+<div class="flex flex-col gap-2">
+<p class="font-label-md text-label-md text-on-surface font-bold">Community</p>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Guidelines</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Safety</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Support</a>
+</div>
+<div class="flex flex-col gap-2">
+<p class="font-label-md text-label-md text-on-surface font-bold">Legal</p>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Terms</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary" href="#">Cookie Policy</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto mt-stack-xl pt-stack-md border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center gap-stack-md">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 Padosi Community Private Limited. All rights reserved.</p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">social_leaderboard</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">nest_eco_leaf</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">alternate_email</span>
+</div>
+</div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.animationPlayState = 'paused';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.animationPlayState = 'running';
+                });
+            });
+        });
+    </script>
+</body></html>

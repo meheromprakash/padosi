@@ -1,0 +1,357 @@
+/* ── Padosi Design System — Stitch MCP Source of Truth ──────────────────────
+   Colors from: projects/2325095931143996348
+   Primary: #2D6A4F  |  Surface: #f8f9ff  |  Font: Inter
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables (Stitch Design Tokens) ─────────────────────────────────── */
+:root {
+  --primary: #2d6a4f;
+  --primary-dark: #0f5238;
+  --primary-light: #b1f0ce;
+  --secondary: #006c48;
+  --secondary-light: #92f7c3;
+  --surface: #f8f9ff;
+  --surface-low: #eff4ff;
+  --surface-container: #e6eeff;
+  --surface-high: #dee9fc;
+  --surface-highest: #d9e3f6;
+  --surface-white: #ffffff;
+  --on-surface: #121c2a;
+  --on-surface-variant: #404943;
+  --outline: #707973;
+  --outline-variant: #bfc9c1;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --tertiary: #f4a261;
+  --shadow-1: 0 4px 12px rgba(31, 41, 55, 0.05);
+  --shadow-2: 0 8px 24px rgba(31, 41, 55, 0.10);
+  --shadow-ambient: 0 20px 40px rgba(45, 106, 79, 0.08);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--surface);
+  color: var(--on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--outline-variant); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--outline); }
+
+@layer components {
+  /* ── Desktop App Shell ────────────────────────────────────────────────────
+     3-column layout: Fixed Sidebar | Main Feed | Right Panel
+     ──────────────────────────────────────────────────────────────────────── */
+  .app-shell {
+    @apply flex min-h-screen;
+    background-color: var(--surface);
+  }
+
+  /* ── Sidebar Nav (desktop) ──────────────────────────────────────────────── */
+  .sidebar {
+    @apply fixed top-0 left-0 h-full flex flex-col z-40;
+    width: 288px;
+    background-color: var(--surface-white);
+    border-right: none;
+    box-shadow: var(--shadow-1);
+  }
+
+  .sidebar-logo {
+    @apply flex items-center gap-3 px-6 py-6 border-b;
+    border-color: var(--surface-container);
+  }
+
+  .sidebar-logo-icon {
+    @apply w-9 h-9 rounded-xl flex items-center justify-center text-lg font-bold text-white;
+    background: linear-gradient(135deg, var(--primary) 0%, #52B788 100%);
+  }
+
+  .sidebar-logo-text {
+    @apply text-xl font-bold tracking-tight;
+    color: var(--primary-dark);
+    letter-spacing: -0.02em;
+  }
+
+  .sidebar-locality {
+    @apply px-6 py-3 text-xs font-medium;
+    color: var(--on-surface-variant);
+    background-color: var(--surface-low);
+    border-bottom: 1px solid var(--surface-container);
+  }
+
+  .sidebar-nav { @apply flex-1 px-3 py-4 space-y-1 overflow-y-auto; }
+
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl w-full text-sm font-medium transition-all duration-200 cursor-pointer relative;
+    color: var(--on-surface-variant);
+  }
+
+  .nav-item:hover {
+    background-color: var(--surface-low);
+    color: var(--on-surface);
+    transform: translateX(2px);
+  }
+
+  .nav-item.active {
+    background-color: #e8f5ee;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .nav-item.active::before {
+    content: '';
+    @apply absolute left-0 top-2 bottom-2 w-1 rounded-r-full;
+    background-color: var(--primary);
+  }
+
+  .sidebar-footer {
+    @apply px-4 py-4 border-t;
+    border-color: var(--surface-container);
+  }
+
+  /* ── Main Content Area ──────────────────────────────────────────────────── */
+  .main-content {
+    @apply flex-1 min-h-screen;
+    margin-left: 288px;
+    margin-right: 320px;
+    padding: 0;
+  }
+
+  .main-content-full {
+    @apply flex-1 min-h-screen;
+    margin-left: 288px;
+  }
+
+  /* ── Right Panel ─────────────────────────────────────────────────────────── */
+  .right-panel {
+    @apply fixed top-0 right-0 h-full overflow-y-auto;
+    width: 320px;
+    background-color: var(--surface-white);
+    border-left: none;
+    box-shadow: var(--shadow-1);
+  }
+
+  /* ── Page Header (sticky top bar in main content) ──────────────────────── */
+  .page-header {
+    @apply sticky top-0 z-30 px-8 py-5 flex items-center justify-between;
+    background-color: rgba(248, 249, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--surface-container);
+  }
+
+  .page-title {
+    @apply text-2xl font-bold tracking-tight;
+    color: var(--on-surface);
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Cards ────────────────────────────────────────────────────────────────
+     Level 1: standard cards (surface-white on surface bg)
+     ──────────────────────────────────────────────────────────────────────── */
+  .card {
+    @apply rounded-xl bg-white;
+    box-shadow: var(--shadow-1);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover { box-shadow: var(--shadow-2); }
+
+  .card-lifted {
+    @apply rounded-xl bg-white;
+    box-shadow: var(--shadow-ambient);
+  }
+
+  /* ── Feed Post Card ──────────────────────────────────────────────────────── */
+  .feed-card {
+    @apply card p-5 cursor-pointer;
+  }
+
+  .feed-card:hover {
+    @apply -translate-y-0.5;
+    box-shadow: var(--shadow-2);
+  }
+
+  /* ── Input Fields (Stitch: filled style, no border) ─────────────────────── */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200;
+    background-color: var(--surface-low);
+    color: var(--on-surface);
+    border: 1.5px solid transparent;
+  }
+
+  .input-field:focus {
+    background-color: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.1);
+  }
+
+  .input-field::placeholder { color: var(--outline); }
+
+  .input-label {
+    @apply block text-xs font-semibold mb-1.5;
+    color: var(--on-surface-variant);
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Buttons (Stitch: gradient primary, no border secondary) ─────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white
+           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    box-shadow: 0 2px 8px rgba(45, 106, 79, 0.3);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: 0 4px 16px rgba(45, 106, 79, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
+           transition-all duration-200;
+    background-color: var(--surface-container);
+    color: var(--primary);
+  }
+
+  .btn-secondary:hover { background-color: var(--surface-high); }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
+           transition-all duration-200;
+    color: var(--on-surface-variant);
+  }
+
+  .btn-ghost:hover { background-color: var(--surface-low); color: var(--on-surface); }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all;
+    color: var(--error);
+    background-color: var(--error-container);
+  }
+
+  /* ── Chips / Filter Pills ────────────────────────────────────────────────── */
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium
+           whitespace-nowrap transition-all duration-200 cursor-pointer;
+    background-color: var(--surface-container);
+    color: var(--on-surface-variant);
+    border: 1.5px solid transparent;
+  }
+
+  .chip:hover { background-color: var(--surface-high); color: var(--on-surface); }
+
+  .chip.active {
+    background-color: #e8f5ee;
+    color: var(--primary);
+    border-color: rgba(45, 106, 79, 0.2);
+    font-weight: 600;
+  }
+
+  /* ── Alert severity bands ─────────────────────────────────────────────────── */
+  .alert-critical { @apply border-l-4 border-red-500 bg-red-50; }
+  .alert-high { @apply border-l-4 border-orange-400 bg-orange-50; }
+  .alert-medium { @apply border-l-4 border-yellow-400 bg-yellow-50; }
+  .alert-info { @apply border-l-4 bg-blue-50; border-left-color: #3b82f6; }
+
+  /* ── Avatar ──────────────────────────────────────────────────────────────── */
+  .avatar-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, #52B788 100%);
+  }
+
+  /* ── Badge ───────────────────────────────────────────────────────────────── */
+  .badge-verified {
+    @apply inline-flex items-center gap-0.5 text-xs font-semibold px-2 py-0.5 rounded-full;
+    background-color: #e8f5ee;
+    color: var(--primary);
+  }
+
+  /* ── Separator using spacing not borders ─────────────────────────────────── */
+  .section-title {
+    @apply text-lg font-semibold tracking-tight;
+    color: var(--on-surface);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Skeleton shimmer ────────────────────────────────────────────────────── */
+  .skeleton {
+    @apply rounded-lg animate-pulse;
+    background-color: var(--surface-container);
+  }
+
+  /* ── Onboarding / Auth pages ─────────────────────────────────────────────── */
+  .auth-page {
+    @apply min-h-screen flex;
+    background-color: var(--surface);
+  }
+
+  .auth-left {
+    @apply hidden lg:flex flex-col justify-between p-16 relative overflow-hidden;
+    width: 480px;
+    flex-shrink: 0;
+    background: linear-gradient(150deg, var(--primary-dark) 0%, var(--primary) 60%, #52B788 100%);
+  }
+
+  .auth-right {
+    @apply flex-1 flex flex-col items-center justify-center p-8 lg:p-16;
+    background-color: var(--surface-white);
+  }
+
+  .auth-form { @apply w-full max-w-md; }
+
+  /* ── Gradient ─────────────────────────────────────────────────────────────── */
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  }
+
+  /* ── Mobile bottom nav ────────────────────────────────────────────────────── */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-2 py-3 lg:hidden;
+    background-color: var(--surface-white);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+    border-top: 1px solid var(--surface-container);
+  }
+
+  .mobile-nav-item {
+    @apply flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all duration-200;
+    color: var(--outline);
+  }
+
+  .mobile-nav-item.active { color: var(--primary); }
+}
+
+/* ── Utility Animations ──────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.3s ease forwards; }
+.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+/* ── Mobile-only: main content full width ─────────────────────────────────── */
+@media (max-width: 1023px) {
+  .main-content { margin-left: 0; margin-right: 0; }
+  .main-content-full { margin-left: 0; }
+  .sidebar { display: none; }
+  .right-panel { display: none; }
+}

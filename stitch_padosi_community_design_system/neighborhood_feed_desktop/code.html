@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Padosi - Gotri, Vadodara Community Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#d9e3f6",
+                    "on-primary-container": "#a8e7c5",
+                    "tertiary": "#713900",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#404943",
+                    "surface-container-low": "#eff4ff",
+                    "secondary-fixed": "#92f7c3",
+                    "primary-fixed": "#b1f0ce",
+                    "outline-variant": "#bfc9c1",
+                    "on-surface": "#121c2a",
+                    "secondary-container": "#92f7c3",
+                    "on-tertiary-fixed-variant": "#6f3800",
+                    "tertiary-container": "#8f4f14",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#0e5138",
+                    "on-tertiary-container": "#ffd1b1",
+                    "tertiary-fixed": "#ffdcc4",
+                    "surface-container": "#e6eeff",
+                    "on-primary-fixed": "#002114",
+                    "error": "#ba1a1a",
+                    "background": "#f8f9ff",
+                    "primary-container": "#2d6a4f",
+                    "on-error": "#ffffff",
+                    "on-background": "#121c2a",
+                    "on-error-container": "#93000a",
+                    "primary": "#0f5238",
+                    "on-secondary-fixed-variant": "#005235",
+                    "secondary": "#006c48",
+                    "on-tertiary-fixed": "#2f1400",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed-dim": "#75daa8",
+                    "surface-bright": "#f8f9ff",
+                    "surface-tint": "#2c694e",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb780",
+                    "surface-container-high": "#dee9fc",
+                    "on-secondary-container": "#00734d",
+                    "outline": "#707973",
+                    "inverse-primary": "#95d4b3",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "surface-variant": "#d9e3f6",
+                    "primary-fixed-dim": "#95d4b3",
+                    "inverse-surface": "#27313f",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-dim": "#d0dbed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xl": "40px",
+                    "stack-md": "16px",
+                    "unit": "4px",
+                    "margin-mobile": "20px",
+                    "stack-sm": "8px",
+                    "gutter": "16px",
+                    "margin-desktop": "48px",
+                    "stack-lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #121c2a;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-72 fixed left-0 top-0 overflow-y-auto bg-surface-container-low dark:bg-surface-container-lowest shadow-[4px_0px_12px_rgba(31,41,55,0.05)] border-r border-outline-variant/30 flex flex-col gap-stack-md px-margin-mobile py-stack-lg z-50">
+<div class="flex flex-col gap-stack-md">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3 mb-stack-lg">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="neighborhood" style="font-variation-settings: 'FILL' 1;">nearby</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Padosi</span>
+<span class="font-label-sm text-label-sm text-outline">Greenwood Estates</span>
+</div>
+</div>
+<!-- Locality Selector -->
+<button class="flex items-center justify-between bg-surface-container-high rounded-xl px-4 py-3 hover:scale-[1.02] transition-transform duration-200">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<div class="text-left">
+<p class="font-label-md text-label-md font-bold text-on-surface">Gotri, Vadodara</p>
+<p class="text-[10px] text-outline uppercase tracking-wider">Current Locality</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</button>
+<!-- Navigation Links -->
+<nav class="mt-stack-md flex flex-col gap-1">
+<a class="bg-primary-container text-on-primary-container rounded-xl font-bold px-4 py-3 flex items-center gap-3 transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Alerts</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-md text-label-md">Market</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Directory</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<button class="mt-stack-lg bg-primary text-on-primary rounded-xl font-bold px-4 py-4 w-full shadow-lg hover:scale-[1.02] transition-transform duration-200 active:scale-95">
+                Create Post
+            </button>
+</div>
+</aside>
+<!-- Top App Bar (Main Content Header) -->
+<header class="h-16 fixed top-0 right-0 z-40 bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-margin-desktop ml-72 max-w-[calc(100%-288px)]">
+<div class="flex-1 max-w-2xl relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-12 pr-4 focus:ring-2 focus:ring-primary-container transition-all font-body-sm text-body-sm" placeholder="Search neighbors, services, or alerts in Gotri..." type="text"/>
+</div>
+<div class="flex items-center gap-stack-md ml-stack-md">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border-2 border-primary-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young Indian man with a friendly expression, wearing a smart casual linen shirt. The background is a soft-focus urban park in Vadodara during the golden hour, with warm, gentle light highlighting his features in a clean, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADwSZ64I80Wc0Ct2BoZe4f2GGtNioxy4ifEmghK-Fs26BsteqvrPW3l6tU1OC7RpuySfob00wGhkc1Zb7zjgoQKk9USVobTuqSFUfPDH5NhQ91Vlcr5QcSQew6uWrhf2kxO0z-EJx688tWrcvSmFM-S6qoEZuP-M_sCQ9V7hRost66i_I-OvTk0MIearYm961N1hgvfNqqgUy7KIUh1l4y1j-bDC78kpMOqefeqxeI6FZDvyxCoTQIdC2-VKBmcJsVz-fAgo5qVn8"/>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="ml-72 pt-16 min-h-screen bg-background flex">
+<!-- Center Feed -->
+<div class="flex-1 max-w-[700px] px-stack-lg py-stack-lg flex flex-col gap-stack-lg border-r border-outline-variant/10">
+<!-- Feed Composer -->
+<div class="bg-surface-container-lowest rounded-2xl p-stack-lg shadow-[0px_4px_12px_rgba(31,41,55,0.05)]">
+<div class="flex gap-stack-md mb-stack-md">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young Indian man with a friendly expression, wearing a smart casual linen shirt. The background is a soft-focus urban park in Vadodara during the golden hour, with warm, gentle light highlighting his features in a clean, modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0kug1SjOageBh_u-BTGVjXSrdiFtyYOwO2zV03ycWRpNYBBEtsSpPMe-48_KF-Rms2Rxov1FCuWKO_lJ93MisVREhJeOLTGriF7T8WoZvp0Wne0VdHcu3MW-D74c9ZvGlEblds_5EwHK4tcjQLjfVf6UyqYSmSd6f9Vc8M_4gbqnkFw_amTLBGnozAWbAuI6MBp3h0zL4UPptyfFX3fXzxQCQZ-osKW4Mqt7_OttKI1zy3-1u0aKQfIMwuctuyuDONQiUmWGUKdg"/>
+</div>
+<textarea class="flex-1 bg-surface-container border-none rounded-xl p-4 min-h-[100px] focus:ring-2 focus:ring-primary-container transition-all resize-none font-body-md text-body-md placeholder:text-outline" placeholder="What's happening in Gotri?"></textarea>
+</div>
+<div class="flex justify-between items-center pt-stack-sm border-t border-outline-variant/20">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+<span class="font-label-sm text-label-sm">Photo</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-sm text-label-sm">Event</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-tertiary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="font-label-sm text-label-sm">Help</span>
+</button>
+</div>
+<button class="bg-primary text-on-primary font-bold px-6 py-2 rounded-xl text-label-md hover:opacity-90 active:scale-95 transition-all">
+                        Post
+                    </button>
+</div>
+</div>
+<!-- Priority Alert Card -->
+<div class="bg-error-container border border-error/20 rounded-2xl p-stack-lg shadow-[0px_8px_24px_rgba(186,26,26,0.08)] animate-pulse hover:animate-none">
+<div class="flex justify-between items-start mb-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-error rounded-full flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-error-container">Theft reported near D-block</h3>
+<p class="font-label-sm text-label-sm text-on-error-container/70">Critical Alert • 24 mins ago</p>
+</div>
+</div>
+<button class="text-on-error-container hover:bg-error/10 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<p class="text-on-error-container font-body-md mb-stack-md leading-relaxed">
+                    A motorcycle theft was reported near D-block parking today around 4:00 PM. Neighbors are advised to double-check their security cameras and ensure vehicles are locked. Police have been notified.
+                </p>
+<div class="flex gap-stack-sm">
+<button class="bg-error text-white font-bold px-4 py-2 rounded-xl text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span> I'm Safe
+                    </button>
+<button class="border border-error/30 text-on-error-container font-bold px-4 py-2 rounded-xl text-label-md">
+                        Contact Security
+                    </button>
+</div>
+</div>
+<!-- Standard Community Post -->
+<div class="bg-surface-container-lowest rounded-2xl p-stack-lg shadow-[0px_4px_12px_rgba(31,41,55,0.05)] hover:shadow-[0px_8px_24px_rgba(31,41,55,0.08)] transition-all">
+<div class="flex justify-between items-start mb-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full overflow-hidden">
+<img alt="Rohit Sharma" class="w-full h-full object-cover" data-alt="A portrait of a middle-aged Indian man with a kind smile and spectacles, representing a friendly neighbor. He is standing in a brightly lit modern kitchen with clean lines and soft daylight coming from a window, embodying a reliable community member in a premium residential setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQoCKFKjhzAyW5H7ZiWe3KclzB7weKTvXwCHUtQ8rIho4PPnTNN883C6gEIUwDkWPVhSRmwrFYfR1LLvC5gTmYvc5TgFjzrisDN-alelp--sJZjKuv6XlfjtNvQoGdHgF6pGCGsfN57IyDDT8JLBIgv6uE_LjYGvFKXBW6UZKpOswXHEib-7sJSYf_8tNhYLCXlLUjYV9ETxu0S5aLXyO5wAoHS17gelvVZwBSdrsCX8tzd8LREC-vjI87k985ylwoz-oxG51r_UY"/>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Rohit Sharma</h4>
+<p class="font-label-sm text-label-sm text-outline">Greenwood Estates • 2 hours ago</p>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Recommendation</span>
+</div>
+<p class="text-on-surface-variant font-body-md mb-stack-md leading-relaxed">
+                    Hi neighbors! Does anyone have a reliable plumber they could recommend for some leak repairs in C-block? Looking for someone who can visit by tomorrow morning. Thanks in advance!
+                </p>
+<div class="flex items-center gap-stack-lg pt-stack-sm border-t border-outline-variant/10">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="recommend">recommend</span>
+<span class="font-label-md text-label-md">12</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chat_bubble_outline">chat_bubble_outline</span>
+<span class="font-label-md text-label-md">5 Replies</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors ml-auto">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</div>
+</div>
+<!-- Asymmetric Bento-style Post -->
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="bg-primary-container text-on-primary-container rounded-2xl p-stack-lg flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-4xl mb-stack-sm" data-icon="volunteer_activism">volunteer_activism</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">Weekend Garden Drive</h4>
+<p class="font-body-sm text-body-sm opacity-80">Help us plant 50 new saplings in the Central Park this Saturday.</p>
+</div>
+<button class="mt-stack-lg bg-on-primary-container text-primary font-bold py-2 rounded-xl">Join Now</button>
+</div>
+<div class="bg-surface-container-high rounded-2xl overflow-hidden group">
+<div class="h-32 bg-outline-variant relative overflow-hidden">
+<img alt="Neighborhood event" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautiful, vibrant photo of a community garden in full bloom during a sunny morning in Vadodara. People are seen in the distance tending to plants. The lighting is warm and inviting, highlighting lush green foliage and colorful tropical flowers, creating a sense of growth and communal care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5UzhxJkIxFmHbXSrRCk32z4vOFZfkLGMWumeUaZEiJtSQhB1j8uT46F1oP53NUIVCpQyH4u-bwGbCYPaf0uLmQGWqSiBQQgwY447e2ETjP6_NIcIWAzANA49u3O9iA88xpjeT3D95c9bBtOsboQ3ei0aCu8ALJkrmc1VHcZpgxsqJr-wctFBkenSZXxtu1VCfknNI-dCdk8xoT_nXVkMmQUzf5cjsqXmYRQgnSmc8UbEFR_8AY3v9v83e4Ov2AMc_0zgWeoCOYeI"/>
+</div>
+<div class="p-4">
+<h4 class="font-label-md text-label-md font-bold">Lost &amp; Found</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Silver keys found near the gym area.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Widgets -->
+<aside class="w-80 px-stack-lg py-stack-lg flex flex-col gap-stack-lg">
+<!-- Urgent Alerts Widget -->
+<div class="bg-surface-container-lowest rounded-2xl p-stack-md border border-outline-variant/20">
+<div class="flex items-center gap-2 mb-stack-md">
+<span class="material-symbols-outlined text-error" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<h3 class="font-label-md text-label-md font-bold uppercase tracking-widest text-on-surface-variant">Urgent Alerts</h3>
+</div>
+<div class="flex flex-col gap-3">
+<div class="p-3 bg-surface rounded-xl flex gap-3 border-l-4 border-error">
+<div class="flex-1">
+<p class="font-label-sm text-label-sm font-bold">Power Outage</p>
+<p class="text-[12px] text-outline">B-Block, Scheduled 2-4 PM</p>
+</div>
+</div>
+<div class="p-3 bg-surface rounded-xl flex gap-3 border-l-4 border-tertiary">
+<div class="flex-1">
+<p class="font-label-sm text-label-sm font-bold">Water Tank Cleaning</p>
+<p class="text-[12px] text-outline">All blocks, Tomorrow 8 AM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Community Stats -->
+<div class="bg-primary text-on-primary rounded-2xl p-stack-lg relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-label-md text-label-md font-bold mb-stack-md opacity-80 uppercase tracking-widest">Community Stats</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-3xl font-bold">1.2k</p>
+<p class="text-xs opacity-70">Neighbors</p>
+</div>
+<div>
+<p class="text-3xl font-bold">98</p>
+<p class="text-xs opacity-70">Active Daily</p>
+</div>
+<div class="col-span-2 pt-2">
+<div class="w-full bg-white/20 h-1 rounded-full overflow-hidden">
+<div class="bg-white h-full w-3/4"></div>
+</div>
+<p class="text-[10px] mt-1 opacity-70">75% of your block is online</p>
+</div>
+</div>
+</div>
+<!-- Abstract pattern overlay -->
+<div class="absolute -right-4 -bottom-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+<!-- Trending in Gotri -->
+<div class="bg-surface-container-lowest rounded-2xl p-stack-lg shadow-[0px_4px_12px_rgba(31,41,55,0.05)]">
+<h3 class="font-label-md text-label-md font-bold mb-stack-md border-b border-outline-variant/10 pb-2">Trending in Gotri</h3>
+<div class="flex flex-col gap-4">
+<div class="group cursor-pointer">
+<p class="text-xs text-outline font-bold uppercase tracking-wider">Food &amp; Dining</p>
+<h4 class="font-label-md text-label-md group-hover:text-primary transition-colors">New Cafe Opening on 30ft Road</h4>
+<p class="text-[12px] text-on-surface-variant">42 neighbors talking about this</p>
+</div>
+<div class="group cursor-pointer">
+<p class="text-xs text-outline font-bold uppercase tracking-wider">Safety</p>
+<h4 class="font-label-md text-label-md group-hover:text-primary transition-colors">Street Light Repair Update</h4>
+<p class="text-[12px] text-on-surface-variant">12 neighbors interested</p>
+</div>
+<div class="group cursor-pointer">
+<p class="text-xs text-outline font-bold uppercase tracking-wider">Services</p>
+<h4 class="font-label-md text-label-md group-hover:text-primary transition-colors">Domestic Help Registry</h4>
+<p class="text-[12px] text-on-surface-variant">85 neighbors active</p>
+</div>
+</div>
+<button class="w-full mt-stack-md text-primary font-bold text-label-sm hover:underline">See all trending</button>
+</div>
+<!-- Footer Links -->
+<div class="px-4 text-[10px] text-outline flex flex-wrap gap-2 leading-tight">
+<a class="hover:text-primary" href="#">About</a>
+<span>•</span>
+<a class="hover:text-primary" href="#">Help Center</a>
+<span>•</span>
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<span>•</span>
+<a class="hover:text-primary" href="#">Terms</a>
+<p class="mt-2 w-full">© 2024 Padosi Communities Inc.</p>
+</div>
+</aside>
+</main>
+<!-- Floating Action Button (Mobile Only / Responsive Check) -->
+<button class="md:hidden fixed bottom-8 right-6 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center z-50 transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<script>
+        // Simple interaction for the search bar
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.01]');
+        });
+
+        // Toggle Active State logic (as mandated)
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.className = "text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 flex items-center gap-3 transition-colors";
+                    const icon = l.querySelector('.material-symbols-outlined');
+                    if(icon) icon.style.fontVariationSettings = "'FILL' 0";
+                });
+                link.className = "bg-primary-container text-on-primary-container rounded-xl font-bold px-4 py-3 flex items-center gap-3 transition-all duration-150 active:scale-95";
+                const activeIcon = link.querySelector('.material-symbols-outlined');
+                if(activeIcon) activeIcon.style.fontVariationSettings = "'FILL' 1";
+            });
+        });
+    </script>
+</body></html>

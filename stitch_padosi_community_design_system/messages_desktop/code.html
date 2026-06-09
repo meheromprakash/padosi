@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Padosi Messenger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary-container": "#a8e7c5",
+                        "tertiary": "#713900",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#404943",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#92f7c3",
+                        "primary-fixed": "#b1f0ce",
+                        "outline-variant": "#bfc9c1",
+                        "on-surface": "#121c2a",
+                        "secondary-container": "#92f7c3",
+                        "on-tertiary-fixed-variant": "#6f3800",
+                        "tertiary-container": "#8f4f14",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#0e5138",
+                        "on-tertiary-container": "#ffd1b1",
+                        "tertiary-fixed": "#ffdcc4",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed": "#002114",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff",
+                        "primary-container": "#2d6a4f",
+                        "on-error": "#ffffff",
+                        "on-background": "#121c2a",
+                        "on-error-container": "#93000a",
+                        "primary": "#0f5238",
+                        "on-secondary-fixed-variant": "#005235",
+                        "secondary": "#006c48",
+                        "on-tertiary-fixed": "#2f1400",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#75daa8",
+                        "surface-bright": "#f8f9ff",
+                        "surface-tint": "#2c694e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb780",
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary-container": "#00734d",
+                        "outline": "#707973",
+                        "inverse-primary": "#95d4b3",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "surface-variant": "#d9e3f6",
+                        "primary-fixed-dim": "#95d4b3",
+                        "inverse-surface": "#27313f",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-dim": "#d0dbed"
+                    },
+                    "spacing": {
+                        "stack-xl": "40px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "margin-desktop": "48px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #bfc9c1; border-radius: 10px; }
+        .glass-panel {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden">
+<!-- Sidebar Navigation (Predicted Component: SideNavBar) -->
+<aside class="h-screen w-72 fixed left-0 top-0 overflow-y-auto bg-surface-container-low dark:bg-surface-container-lowest shadow-[4px_0px_12px_rgba(31,41,55,0.05)] border-r border-outline-variant/30 flex flex-col gap-stack-md px-margin-mobile py-stack-lg z-50">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="potted_plant">potted_plant</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Padosi</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Greenwood Estates</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md">Home</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md">Alerts</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-md">Market</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md">Directory</span>
+</a>
+<!-- Active State: Messages -->
+<a class="bg-primary-container text-on-primary-container rounded-xl font-bold px-4 py-3 flex items-center gap-3 shadow-sm" href="#">
+<span class="material-symbols-outlined" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="font-label-md">Messages</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full bg-primary text-on-primary rounded-xl py-3 font-bold hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Create Post
+            </button>
+</div>
+</aside>
+<!-- Main Messenger Container -->
+<main class="ml-72 h-screen flex overflow-hidden">
+<!-- Panel 1: Conversation List -->
+<section class="w-80 lg:w-96 border-r border-outline-variant/30 flex flex-col bg-surface-container-lowest">
+<div class="p-stack-lg space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Messages</h2>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-low border-none rounded-xl text-body-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search neighbors..." type="text"/>
+</div>
+</div>
+<!-- List -->
+<div class="flex-1 overflow-y-auto px-2 pb-4">
+<!-- Active Chat -->
+<div class="bg-primary/5 border-l-4 border-primary px-4 py-4 rounded-r-xl cursor-pointer hover:bg-primary/10 transition-colors flex gap-4">
+<img alt="Arjun K." class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="A warm and professional portrait of a middle-aged Indian man with a kind smile and friendly eyes. He is wearing a smart-casual olive green linen shirt, standing against a blurred background of a modern neighborhood garden. The lighting is soft morning sunlight, creating a high-end humanist corporate aesthetic that feels reliable and approachable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-WwJerKO1ksPEP8Swgd0CseKc_09zmD-MJyVuqauDrxOfVCD-OQNPRD3-nv__CmHXtdA8SIeQZEvPoftO0ei9gnwoom6kZ_YXPi2HXTL86QvdqEMKogYnw2ksp77U_KMcxiLrw5offTYIPtCV2BHBwImG3iGeWfA-GYojDlE3TkFP96zhuROXJJ4zvHAnhcK9Fqmso-Iu6lTJDoFpwMSsQk_Jmgu1Cwd3Nx6HNDTcxdCrEqdY9K-aKbzn2tqzJ7xDvPA69B5ZY2c"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-label-md text-on-surface truncate">Arjun Kapur</h3>
+<span class="text-[10px] font-bold text-primary">JUST NOW</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate font-medium">He's great, fixed my kitchen sink last...</p>
+</div>
+</div>
+<!-- Other Chats -->
+<div class="px-4 py-4 rounded-xl cursor-pointer hover:bg-surface-container transition-colors flex gap-4 opacity-80">
+<img alt="Priya S." class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a cheerful Indian woman in her late 20s, wearing traditional silver earrings and a contemporary teal top. She is captured in a brightly lit modern apartment balcony with lush green plants in the background. The mood is vibrant, friendly, and securely professional, adhering to a clean light-mode design palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCtfkmP2jh8kqJu0xjHmMkwHmeKK4NV-1nGDz4goyENsnMQgGoXCwebr1SdQoFDBfOWqzX1Lg6004vs8JQECd_aFl-RrztOXW07SdVSVkyURJhDWoR1mYrb4IH7meLVjJOKmb_k6WHGazPdXD8SQG2aZFX2-F-0vttflv81pxIZBmv3rLOxVI3cS_Asu5pE8UCCUaXBoigR7KrH32-8OZj_NRpNrxgvv6oTC7I5gOZodaHG-fUtVywymfSDWGXeYFXd5PjAVHWq3s"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-label-md text-on-surface truncate">Priya Sharma</h3>
+<span class="text-[10px] text-on-surface-variant opacity-60">10:45 AM</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Thanks for the morning walk invite!</p>
+</div>
+</div>
+<div class="px-4 py-4 rounded-xl cursor-pointer hover:bg-surface-container transition-colors flex gap-4 opacity-80">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">
+                        BH
+                    </div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-label-md text-on-surface truncate">Block H Group</h3>
+<span class="text-[10px] text-on-surface-variant opacity-60">Yesterday</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Ravi: Security gate is now fixed.</p>
+</div>
+</div>
+<div class="px-4 py-4 rounded-xl cursor-pointer hover:bg-surface-container transition-colors flex gap-4 opacity-80">
+<img alt="Dev M." class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a young Indian man wearing glasses and a simple white t-shirt, looking into the camera with a helpful and honest expression. The background is a minimalist home office with warm wooden tones and natural light. The photograph is clean, crisp, and conveys a sense of community trust and modern urban living." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuOm42wesZn1Lha-48aQnzsHD0UdJUdfMu22foqRJdjbAY-UrRd2ACsSmypm8-VRJBrAxPv4sofhbER0KTmu4AkhPVblOSYlSRxRR0XothuRebioK--KyyTHIdQGo8G3beukZ5CjVvz1S8uJZWr2sYuXEoR2gAZwh4PYVCGYjswDQCj_B1a1jB-e7z_52H4ei-5diSGtZxzC8lwG3tFxGy9XZFyPyOumSC47lSYTosSf-T_4nWzHoa3PaNOCLOqeoA4mHeY3ivcNg"/>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h3 class="font-label-md text-on-surface truncate">Dev Mehra</h3>
+<span class="text-[10px] text-on-surface-variant opacity-60">Tuesday</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Is the tennis court available today?</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Panel 2: Active Chat Window -->
+<section class="flex-1 flex flex-col bg-surface-container-low/30 relative">
+<!-- Chat Header -->
+<header class="h-16 glass-panel px-stack-lg flex items-center justify-between border-b border-outline-variant/10 z-10">
+<div class="flex items-center gap-3">
+<img alt="Arjun K." class="w-9 h-9 rounded-full object-cover shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRANnaSYhTJRcJ7AfKI9tGKbknqOh5ee2UaIWAr7yHPjeBZOzL65LNlN6EN4oILMy2-7DG551m5GttHn_pF7BIaTqC-nkaVhiz1_cpaqQ2VH3gAefcqYANW_y3WXARnNjUzHa-C6lA0SE6MbDL64yMv5X-6__tVn67WP4tU4TewFrjwKhnW-5ariGRgbmc5nCh0u2qA-h25G58yQO-SCOOj33LRf6DahigGcOVKwxGpIncHpn5sPueP4A8FNj36CZB_F4CdErM45o"/>
+<div>
+<h3 class="font-label-md text-on-surface">Arjun Kapur</h3>
+<p class="text-[11px] text-primary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            Online
+                        </p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant"><span class="material-symbols-outlined" data-icon="videocam">videocam</span></button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant"><span class="material-symbols-outlined" data-icon="call">call</span></button>
+<button class="p-2 hover:bg-surface-container rounded-full text-on-surface-variant"><span class="material-symbols-outlined" data-icon="more_vert">more_vert</span></button>
+</div>
+</header>
+<!-- Messages Area -->
+<div class="flex-1 overflow-y-auto p-stack-lg space-y-6">
+<!-- Date Divider -->
+<div class="flex justify-center">
+<span class="bg-surface-container text-on-surface-variant text-[11px] px-3 py-1 rounded-full font-bold">TODAY</span>
+</div>
+<!-- Recieved Message -->
+<div class="flex flex-col items-start max-w-[80%]">
+<div class="bg-white p-stack-md rounded-2xl rounded-tl-none shadow-sm text-body-md text-on-surface border border-outline-variant/10">
+                        Hey! Do you know any good local plumbers? I have a minor leak in the guest bathroom.
+                    </div>
+<span class="text-[10px] text-on-surface-variant mt-1 ml-1 opacity-60">11:02 AM</span>
+</div>
+<!-- Sent Message -->
+<div class="flex flex-col items-end self-end max-w-[80%] ml-auto">
+<div class="bg-primary text-on-primary p-stack-md rounded-2xl rounded-tr-none shadow-md text-body-md">
+                        Yes! I used Rakesh from 'Perfect Plumbing' last month. 
+                    </div>
+<span class="text-[10px] text-on-surface-variant mt-1 mr-1 opacity-60">11:05 AM</span>
+</div>
+<div class="flex flex-col items-end self-end max-w-[80%] ml-auto">
+<div class="bg-primary text-on-primary p-stack-md rounded-2xl rounded-tr-none shadow-md text-body-md">
+                        He's reliable and very reasonable with his rates. Shall I send you his contact card?
+                    </div>
+<span class="text-[10px] text-on-surface-variant mt-1 mr-1 opacity-60">11:05 AM</span>
+</div>
+<!-- Recieved Message -->
+<div class="flex flex-col items-start max-w-[80%]">
+<div class="bg-white p-stack-md rounded-2xl rounded-tl-none shadow-sm text-body-md text-on-surface border border-outline-variant/10">
+                        That would be great! Does he work on weekends?
+                    </div>
+<span class="text-[10px] text-on-surface-variant mt-1 ml-1 opacity-60">11:08 AM</span>
+</div>
+<!-- Sent Message with Attachment Look-alike -->
+<div class="flex flex-col items-end self-end max-w-[80%] ml-auto">
+<div class="bg-primary text-on-primary p-stack-md rounded-2xl rounded-tr-none shadow-md text-body-md space-y-3">
+<span>He's great, fixed my kitchen sink last time in under 20 minutes. Here is his profile.</span>
+<div class="bg-white/10 rounded-xl p-3 flex items-center gap-3 border border-white/20">
+<div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="contact_page">contact_page</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Rakesh (Plumber)</p>
+<p class="text-xs opacity-80">+91 98765 43210</p>
+</div>
+</div>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 mr-1 opacity-60">11:12 AM</span>
+</div>
+</div>
+<!-- Chat Input -->
+<footer class="p-stack-lg bg-surface-container-lowest">
+<div class="flex items-center gap-4 bg-surface-container-low rounded-2xl px-4 py-2 border border-outline-variant/10 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 py-3 text-body-md" placeholder="Type your message..." type="text"/>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="sentiment_satisfied">sentiment_satisfied</span>
+</button>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-xl flex items-center justify-center shadow-md hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</footer>
+</section>
+<!-- Panel 3: Details Panel -->
+<section class="w-80 border-l border-outline-variant/30 hidden xl:flex flex-col bg-surface-container-lowest overflow-y-auto">
+<!-- Profile Summary -->
+<div class="p-stack-lg text-center space-y-4 border-b border-outline-variant/10">
+<div class="relative inline-block">
+<img alt="Arjun K." class="w-24 h-24 rounded-full object-cover mx-auto ring-4 ring-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHnHPmnGxCzJgWCTBzenAlMd2V4c87F2ZsrMWc5KXdQV06Fl1C2ErAo67KvXumJ7mum8ZfB2Rhz194xFSwAZqRsot_CGqDvbOJIFnJQjWnc5gptfx6IHzWwVQq-8l6gDpq7SPmEB_E42I6-sy3ow-3jGtPlcZ02fYlsXz_uxT-ARqMdt398CvrJfn5bT5UkCHdfUWbtrlZq2YScRX4pBr8ojHvKuT3FepUUWJhjM7G5bvQeCwuMKCI370N9P2QQLPJR3lH2q6SuaU"/>
+<span class="absolute bottom-1 right-1 w-5 h-5 bg-primary border-4 border-white rounded-full"></span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm">Arjun Kapur</h2>
+<p class="text-body-sm text-on-surface-variant">House No. 42, Block B</p>
+</div>
+<div class="flex justify-center gap-2">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-bold">Resident 5y+</span>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-[11px] font-bold">Pet Owner</span>
+</div>
+</div>
+<!-- Mutual Neighbors -->
+<div class="p-stack-lg space-y-4 border-b border-outline-variant/10">
+<div class="flex justify-between items-center">
+<h3 class="font-label-md text-on-surface">Mutual Neighbors</h3>
+<span class="text-xs text-primary font-bold">View all</span>
+</div>
+<div class="flex -space-x-2">
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="A smiling woman in her 30s with a warm expression, softly lit in a modern professional home environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKIgfMaIj2jAv9pWdcKlIO6UPJGOwm0I2VvOYXjp4Sj6XNB2a2uOh2h-_o8XSbmpRGZLUkFNQa_72imzScJ_w3iaKT48fRI4Q52IiAaS9M44CcnWg363wgsFiNyg2uIx6Ok-O8OOCqmErTu9BR3svl9DKyK6c6WaKmW3ykbizynUBfNhzQqwWvteIL2bWNqQAXQtcNKjCiECguTxvW3V7sJtWjjov-aL5Dkl_2SmnDsgs6opvjkKCFt6qIKSVaA4ZTjs_WziEwIMU"/>
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="A portrait of a confident Indian man with a friendly demeanor, wearing a simple blue shirt, in a bright urban outdoor setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB87zx1dn7qKm1Be_kHvzJgKnHIBbo3tKnqVbqfoeW84_oQrN5YcCogY7HFqde66rIlbGDx_GGgATBx9H-fjJYPd4YDQ31gu62HnypD9_Q_4xxitwYVnq2UT4Cxkg6kzMadW8mJz-oiE4Xvj65gqTWkYBBAZblswvMwQbO9euqdXB8lPsxfYNFkhqwUYq6lnQMHRPArHI25lNre5NWoOYse_jvAqEyPgCoi6yhSMgTQR-yvxn45apaQMp_6HVtCsk_EgPuZTNYdMEA"/>
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="A professional headshot of a young Indian woman with glasses, looking approachable and honest against a neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc54XmWvFKnSWNUh0kB7aIAXrGh_lkrHo1YvOjbnAJGH1tCikhGScDaULk0mN_xHn4ou8P6ZKMjXWuw7pxU1f0TsBvilbOYAl67onHA79bWosQlGc8syiQ0cBfzsil8Eb8PP2L4P5Bsdj0KwutFGknAxAxTNeZGfTxMFnLdMvvckYSZnU5nae4FQr4levFWNb9JiWIXVpQ9DaqQ48iWWQjmeF1ekAZhqBIe7-RCxoaXRECTUezqRWHvAONiAGuCcn8zUXDKw064gw"/>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-[10px] font-bold text-on-surface-variant border-2 border-white">+12</div>
+</div>
+<p class="text-body-sm text-on-surface-variant">You and Arjun both know Priya, Dev, and 12 others from Greenwood Estates.</p>
+</div>
+<!-- Shared Marketplace -->
+<div class="p-stack-lg space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-label-md text-on-surface">Shared Marketplace</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-low rounded-xl mb-2 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="A high-quality close-up of a ergonomic wooden desk chair with a modern minimal design, photographed in a bright loft apartment with sunbeams hitting the floor. The aesthetic is clean and premium." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXkwwUROzpfYlM3zfmbbSbV9-v6z9L77XqIxbj7GofV63OCV_yGaAYKfcaOruGjSI8OjLBkM2VrCC0iVn0vkydt0gDiFNQoOEDTZ8Q7rXS1TDPeQLgEPBJ84JocS7PoshCIMWNcReUEUh1_gdhzLA-USuqU8e-DqHibN9R02kyL1mwmnGTAPknogl-9zPG7Ay7h5TZxFTiGJ5vdtg_SHcFrfI_k2VOCBUnjgJRxIur9BKZNi3T2lPu5OTxGpvwyUrUeTsqeVDuu4w"/>
+<span class="absolute top-2 right-2 bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full">₹1,500</span>
+</div>
+<p class="text-[11px] font-bold truncate">Office Chair</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container-low rounded-xl mb-2 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-alt="A clean, modern electric kettle with a sleek matte finish, placed on a marble kitchen countertop with soft ambient lighting. The scene is elegant and represents high-quality local marketplace listings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYahnIAaGJ25hRK1m1tUlJ1Hy_2qUXwZC00zSUqjGDi2Xd3IQpWFzI1ojYlixIKrb9JekhUts16FxUSOWdMOZ2IhsiGh8MOvLYLIU1_SWDJqZVN8S9RwFoD4sYtqzrHECSv7tvxALEAXp2IbTrHNmUy0wq5xo79TqN4nc8A7kHrRiVMtMlVe5NLcHXkiuf75iJwSx7IEra4HOWPkmJEgXoObvMhSg10EyiS_OBFSff9c37dgePIzYf_yyZPJRSf8nj5gAVN-FhMtw"/>
+<span class="absolute top-2 right-2 bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-full">₹800</span>
+</div>
+<p class="text-[11px] font-bold truncate">Electric Kettle</p>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="mt-auto p-stack-lg space-y-3">
+<button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-error/5 text-error transition-colors">
+<span class="font-label-md">Report Neighbor</span>
+<span class="material-symbols-outlined" data-icon="report">report</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-container text-on-surface-variant transition-colors">
+<span class="font-label-md">Mute Notifications</span>
+<span class="material-symbols-outlined" data-icon="notifications_off">notifications_off</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple chat bubble entrance effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const bubbles = document.querySelectorAll('.max-w-\\[80\\%\\]');
+            bubbles.forEach((bubble, index) => {
+                bubble.style.opacity = '0';
+                bubble.style.transform = 'translateY(10px)';
+                bubble.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                setTimeout(() => {
+                    bubble.style.opacity = '1';
+                    bubble.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-primary-container/30');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-primary-container/30');
+        });
+    </script>
+</body></html>

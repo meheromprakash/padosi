@@ -1,0 +1,36 @@
+# Dependency directories
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Local environment variables
+.env
+client/.env
+server/.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Production/build outputs
+client/dist/
+server/dist/
+
+# User uploaded files (development local uploads)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI agents/cache folder
+.gemini/
+scratch/
+client/scratch/

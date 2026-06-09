@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Padosi Business Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d9e3f6",
+                        "on-primary-container": "#a8e7c5",
+                        "tertiary": "#713900",
+                        "error-container": "#ffdad6",
+                        "on-surface-variant": "#404943",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#92f7c3",
+                        "primary-fixed": "#b1f0ce",
+                        "outline-variant": "#bfc9c1",
+                        "on-surface": "#121c2a",
+                        "secondary-container": "#92f7c3",
+                        "on-tertiary-fixed-variant": "#6f3800",
+                        "tertiary-container": "#8f4f14",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#0e5138",
+                        "on-tertiary-container": "#ffd1b1",
+                        "tertiary-fixed": "#ffdcc4",
+                        "surface-container": "#e6eeff",
+                        "on-primary-fixed": "#002114",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9ff",
+                        "primary-container": "#2d6a4f",
+                        "on-error": "#ffffff",
+                        "on-background": "#121c2a",
+                        "on-error-container": "#93000a",
+                        "primary": "#0f5238",
+                        "on-secondary-fixed-variant": "#005235",
+                        "secondary": "#006c48",
+                        "on-tertiary-fixed": "#2f1400",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#75daa8",
+                        "surface-bright": "#f8f9ff",
+                        "surface-tint": "#2c694e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb780",
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary-container": "#00734d",
+                        "outline": "#707973",
+                        "inverse-primary": "#95d4b3",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "surface-variant": "#d9e3f6",
+                        "primary-fixed-dim": "#95d4b3",
+                        "inverse-surface": "#27313f",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-dim": "#d0dbed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "12px",
+                        "2xl": "20px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-xl": "40px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "margin-desktop": "48px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-shadow {
+            box-shadow: 0px 4px 12px rgba(31, 41, 55, 0.05);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-72 fixed left-0 top-0 overflow-y-auto bg-surface-container-low dark:bg-surface-container-lowest shadow-[4px_0px_12px_rgba(31,41,55,0.05)] border-r border-outline-variant/30 flex flex-col gap-stack-md px-margin-mobile py-stack-lg z-50">
+<div class="mb-stack-lg flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="neighborhood">nearby</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim tracking-tight">Padosi</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">Greenwood Estates</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-high rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-high rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Alerts</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-high rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-label-md text-label-md">Market</span>
+</a>
+<!-- Active State: Directory -->
+<a class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl font-bold px-4 py-3 active-nav-shadow flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Directory</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-high rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-high rounded-xl px-4 py-3 transition-colors flex items-center gap-3" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto pt-stack-lg border-t border-outline-variant/20">
+<button class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                Create Post
+            </button>
+</div>
+</aside>
+<!-- TopAppBar Shell -->
+<header class="h-16 fixed top-0 right-0 z-40 bg-surface/80 backdrop-blur-md dark:bg-surface-dim/80 flex justify-between items-center w-full px-margin-desktop ml-72 max-w-[calc(100%-288px)]">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-[#F3F5F4] border-none rounded-full py-2.5 pl-12 pr-4 focus:ring-2 focus:ring-primary-container transition-all text-body-md font-body-md" placeholder="Search local businesses..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 hover:bg-surface-container-highest dark:hover:bg-surface-container rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</button>
+<button class="p-2 hover:bg-surface-container-highest dark:hover:bg-surface-container rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border-2 border-primary-container/20">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf_N7m6KhK1LPcZX3jHTVRQw0REB5QysLQU3CQp71SB8Vk97q9UecXR4BwrcjOCuz_HUSItnVyUkfMN6a8hL7kjv49QyuylINU9MpHOQ0R_8dL_qCfY148YwX6_7uG6gZvkCcBcDEvJnalWB5ZuDVC5j88WyOww9G3q8O2YHJCzhVFNqJDla8JSL-z3RHReyxvsr62lniZaVPPR8MsfY6-ES-4pJGTyCly-wVVT33-LC4-JM2is0HXwvxqCZliLt0QTSCGId5i-II"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 pt-24 px-margin-desktop min-h-screen">
+<div class="flex flex-col md:flex-row gap-stack-xl">
+<!-- Category Filters (Left Sub-Sidebar) -->
+<div class="w-full md:w-64 flex-shrink-0 space-y-stack-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md">Categories</h2>
+<div class="space-y-stack-sm">
+<button class="w-full flex items-center justify-between p-3 rounded-xl bg-primary-container text-on-primary-container font-bold transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-md">Repair</span>
+</div>
+<span class="bg-on-primary-container/20 px-2 py-0.5 rounded text-[10px]">24</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-label-md">Health</span>
+</div>
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-[10px]">18</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+<span class="font-label-md">Food</span>
+</div>
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-[10px]">32</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl text-on-surface-variant hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+<span class="font-label-md">Grocery</span>
+</div>
+</button>
+</div>
+<div class="bg-secondary-container/10 p-stack-md rounded-2xl border border-secondary-container/20">
+<p class="font-label-sm text-secondary text-xs uppercase tracking-wider mb-2">Neighborhood Trust</p>
+<p class="font-body-sm text-on-surface-variant">All businesses listed are verified by Greenwood resident recommendations.</p>
+</div>
+</div>
+<!-- Business Listing Grid -->
+<div class="flex-1">
+<div class="flex items-center justify-between mb-stack-lg">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Trusted Local Experts</h2>
+<p class="font-body-md text-on-surface-variant">Recommended by your neighbors in Greenwood Estates</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container rounded-lg p-1">
+<button class="px-4 py-1.5 bg-white shadow-sm rounded-md text-label-md font-bold text-primary">Grid</button>
+<button class="px-4 py-1.5 text-label-md text-on-surface-variant">List</button>
+</div>
+</div>
+<!-- Bento Grid of Business Cards -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-stack-lg pb-stack-xl">
+<!-- Card 1: Patel Electricals -->
+<div class="bg-white rounded-2xl p-stack-md shadow-[0px_4px_12px_rgba(31,41,55,0.05)] border border-outline-variant/10 hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-stack-md items-start">
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Patel Electricals" class="w-full h-full object-cover" data-alt="A professional electrician with toolbelt working on a modern electrical panel in a brightly lit, clean suburban home. The setting is modern and corporate with soft daylight streaming in. The image features high contrast with clean lines and premium professional service aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXYfm0Tcd7zSEwtvlAgg3loiqDGx-NAZQiJ6KZ18Ygni9g4LK7XlJ_79UpGWiKkv_zN0kZhTLNBvz4O2-vg-DaUuEPx0WEHjS-LwqM_nzmTTDmd14-KpO1Rninp8UrqPo5Nmqh35NxjVZIxkX2FDzhyix-YcN3vzwJ5LqIDWMloLSUcm9u8iPnaII_wwHGLV2qrEvdyINu0m7zWXdSv3xwbHLSb0rkJaQXm4hbY0iq4ZGvkOE8oeAizIYIN9yNhT-6javErw2_nwo"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Patel Electricals</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md font-bold ml-1">4.6</span>
+</span>
+<span class="text-outline text-sm">•</span>
+<span class="font-label-md text-on-surface-variant">15+ years exp.</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm px-3 py-1 rounded-full">Open</span>
+</div>
+<div class="mt-stack-sm flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="verified_user">verified_user</span>
+<p class="font-body-sm italic">Recommended by <span class="font-bold text-on-surface">12 neighbors</span></p>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+                                Call
+                            </button>
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                                WhatsApp
+                            </button>
+</div>
+</div>
+<!-- Card 2: Dr. Mehta Dental -->
+<div class="bg-white rounded-2xl p-stack-md shadow-[0px_4px_12px_rgba(31,41,55,0.05)] border border-outline-variant/10 hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-stack-md items-start">
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Dr. Mehta Dental" class="w-full h-full object-cover" data-alt="A clean, high-end dental clinic with minimalist white furniture and soft teal accents. Professional medical equipment is visible in a blurred background, suggesting a safe and hygienic environment. Soft, diffused lighting creates a warm and trustworthy atmosphere for patients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvuVnmLQH-cco6lA1NAX2KRIpMVU2aAzf8yLoVmjdnOgoBEN7ZTvhISShLGfBsgR_tSb4fKtUy00H6T489R2uWPHWrfyJyb2JpGY99B5QIeiaS9Ex4COXqbqYKYA8OwzmaLESs68YJAgTtZE1KuDB2WR58u06vNLY40tXN3TleDmtTNlUshW0k8gY6qcSajTVaCJsb-_aibWr1rMmEj4svTHhW5lsypIoB7EphrKiApbUd0IB52C6zNRKe4c5NUHUzSyW7ajoOMYY"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Dr. Mehta Dental</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md font-bold ml-1">4.9</span>
+</span>
+<span class="text-outline text-sm">•</span>
+<span class="font-label-md text-on-surface-variant">Kids Specialist</span>
+</div>
+</div>
+<span class="bg-error-container text-on-error-container font-label-sm px-3 py-1 rounded-full">Closes Soon</span>
+</div>
+<div class="mt-stack-sm flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="verified_user">verified_user</span>
+<p class="font-body-sm italic">Recommended by <span class="font-bold text-on-surface">28 neighbors</span></p>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+                                Book Appointment
+                            </button>
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                                WhatsApp
+                            </button>
+</div>
+</div>
+<!-- Card 3: Green Gardeners -->
+<div class="bg-white rounded-2xl p-stack-md shadow-[0px_4px_12px_rgba(31,41,55,0.05)] border border-outline-variant/10 hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-stack-md items-start">
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Green Gardeners" class="w-full h-full object-cover" data-alt="A lush, manicured garden scene in an urban terrace setting with vibrant tropical plants and premium landscaping tools. The morning sun casts soft, golden rays through leaves, creating a peaceful and professional growth-oriented vibe. Corporate modern gardening aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoxAXHauKV2pUFiGAUrOr31MezkJL_bjwP_xkMMnFbYCMkW8EHo2pdx7GxptJG1FvBXwImB7u94UQSxaPVERwCpgcuzLikwr0mrmQ-UiqH9aP4qHFr1W1lGnIGM_4G54hruHM0BPFIY6H21yQlWa46r0yhai-0iwBN-cxJf_UPUevesAKyiINaC7cwJOxInJ08RpK74uougdXKivFZFPzGcp8QvpRGkdgZtQ6193mSTxaQBILLP4nHeCmrVp7kH82hJY5_I2vWD_M"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Green Gardeners</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md font-bold ml-1">4.5</span>
+</span>
+<span class="text-outline text-sm">•</span>
+<span class="font-label-md text-on-surface-variant">Organic Experts</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm px-3 py-1 rounded-full">Available</span>
+</div>
+<div class="mt-stack-sm flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="verified_user">verified_user</span>
+<p class="font-body-sm italic">Recommended by <span class="font-bold text-on-surface">8 neighbors</span></p>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+                                Call
+                            </button>
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                                WhatsApp
+                            </button>
+</div>
+</div>
+<!-- Card 4: Quick Clean Laundry -->
+<div class="bg-white rounded-2xl p-stack-md shadow-[0px_4px_12px_rgba(31,41,55,0.05)] border border-outline-variant/10 hover:scale-[1.01] transition-transform duration-300">
+<div class="flex gap-stack-md items-start">
+<div class="w-24 h-24 rounded-2xl overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Quick Clean Laundry" class="w-full h-full object-cover" data-alt="A clean, bright commercial laundry interior with rows of high-tech washing machines and neatly folded white linens. The space is flooded with bright, cool lighting and features a pristine blue and white color scheme, emphasizing hygiene, precision, and reliable high-end service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqiHafZMSLr7IKS4IbVmTw5z5IS4yelS5oQsyQZb8Lv41lGNuQDI1D7iPtSMYIo5DGbTfbyTO7XCqBItl0_pdZ3nnD6lIEnCZdA4IOXJE28jsekMRpIVVDY_v0-ZqWmGO_Xlvs4txpxPk0R7kv0bgy81q7Tu1nlYa3om-FuJTWxhZyLDS0vzGWb9-J82jcywJbFXyfXpHQUPd2sDVKfCrvyWaoPBCAKiyCfJirXSpIaxBpMMOAqepfAfzcSe03whTygpjgEIG_Hgg"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Quick Clean Laundry</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md font-bold ml-1">4.8</span>
+</span>
+<span class="text-outline text-sm">•</span>
+<span class="font-label-md text-on-surface-variant">Free Pickup</span>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm px-3 py-1 rounded-full">Open</span>
+</div>
+<div class="mt-stack-sm flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="verified_user">verified_user</span>
+<p class="font-body-sm italic">Recommended by <span class="font-bold text-on-surface">42 neighbors</span></p>
+</div>
+</div>
+</div>
+<div class="mt-stack-lg flex gap-3">
+<button class="flex-1 bg-primary text-on-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+                                Order Pickup
+                            </button>
+<button class="flex-1 bg-secondary-container text-on-secondary-container py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                                WhatsApp
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.98)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = '';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary-container');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary-container');
+        });
+    </script>
+</body></html>
