@@ -19,8 +19,8 @@ const postSchema = new mongoose.Schema({
   isActive: { type: Boolean, default: true },
 }, { timestamps: true });
 
-postSchema.index({ localityId: 1, createdAt: -1 });
+postSchema.index({ localityId: 1, category: 1, createdAt: -1 });
+postSchema.index({ localityId: 1, isActive: 1, createdAt: -1 });
 postSchema.index({ authorId: 1 });
-postSchema.index({ category: 1 });
 
 module.exports = mongoose.model('Post', postSchema);

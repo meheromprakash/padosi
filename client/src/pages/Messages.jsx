@@ -1,65 +1,156 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/AppLayout';
 import { formatTime } from '../utils/dateUtils';
 import { useAuth } from '../hooks/useAuth';
 import { useSocket } from '../hooks/useSocket';
 import api from '../api/axios';
-
-const MOCK_CONVERSATIONS = [
-  { userId: '101', name: 'Priya Sharma', lastMessage: 'Is the speaker still available?', time: '2m', unread: 2, avatar: null },
-  { userId: '102', name: 'Rahul Patel', lastMessage: 'Thanks for the recommendation!', time: '1h', unread: 0, avatar: null },
-  { userId: '103', name: 'Meena Joshi', lastMessage: "I'll come tomorrow to check.", time: '3h', unread: 1, avatar: null },
-];
+import TopBar from '../components/TopBar';
 
 export default function Messages() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   const { emit, on } = useSocket();
-  const [conversations] = useState(MOCK_CONVERSATIONS);
+  
+  const [conversations, setConversations] = useState([]);
+  const [conversationsLoading, setConversationsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [partnerTyping, setPartnerTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
-  useEffect(() => {
+  // Fetch active conversations (threads list)
+  const fetchConversations = useCallback(async () => {
+    try {
+      setConversationsLoading(true);
+      const { data } = await api.get('/messages/conversations');
+      setConversations(data.conversations || []);
+    } catch (err) {
+      console.error('Failed to load conversations:', err);
+    } finally {
+      setConversationsLoading(false);
+    }
+  }, []);
+
+  // Fetch message history with a partner
+  const fetchMessages = useCallback(async () => {
     if (!userId) return;
-    const fetchMessages = async () => {
-      setLoading(true);
-      try {
-        const { data } = await api.get(`/messages/${userId}`);
-        setMessages(data.messages || []);
-      } catch {
-        setMessages([]);
-      }
+    setLoading(true);
+    try {
+      const { data } = await api.get(`/messages/${userId}`);
+      setMessages(data.messages || []);
+    } catch (err) {
+      console.error('Failed to fetch messages:', err);
+      setMessages([]);
+    } finally {
       setLoading(false);
-    };
-    fetchMessages();
-    const cleanup = on('message:receive', (msg) => {
-      if (msg.senderId === userId || msg.receiverId === userId) {
-        setMessages((prev) => [...prev, msg]);
-      }
-    });
-    return cleanup;
+    }
   }, [userId]);
 
+  // Load conversations on mount/partner switch
+  useEffect(() => {
+    fetchConversations();
+  }, [userId, fetchConversations]);
+
+  // Load messages and listen to sockets
+  useEffect(() => {
+    fetchMessages();
+
+    if (!userId) return;
+
+    const cleanupReceive = on('message:receive', (msg) => {
+      // Append if it's from the active partner
+      if (msg.senderId === userId || msg.receiverId === userId) {
+        setMessages((prev) => {
+          // Avoid duplicate messages if already optimistically added
+          if (prev.some((m) => m._id === msg._id)) return prev;
+          return [...prev, msg];
+        });
+      }
+      // Reload conversations list to show correct latest message & unread badge
+      fetchConversations();
+    });
+
+    const cleanupTypingStart = on('typing:start', ({ senderId }) => {
+      if (senderId === userId) {
+        setPartnerTyping(true);
+      }
+    });
+
+    const cleanupTypingStop = on('typing:stop', ({ senderId }) => {
+      if (senderId === userId) {
+        setPartnerTyping(false);
+      }
+    });
+
+    return () => {
+      cleanupReceive();
+      cleanupTypingStart();
+      cleanupTypingStop();
+    };
+  }, [userId, fetchMessages, fetchConversations, on]);
+
+  // Scroll to bottom on new message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, partnerTyping]);
 
+  // Send message handler
   const sendMessage = async () => {
-    if (!newMsg.trim()) return;
-    const msgData = { content: newMsg.trim(), receiverId: userId };
-    const optimistic = { _id: Date.now(), ...msgData, senderId: user?._id, createdAt: new Date().toISOString() };
-    setMessages((prev) => [...prev, optimistic]);
+    if (!newMsg.trim() || !userId) return;
+    const contentStr = newMsg.trim();
     setNewMsg('');
+
+    // Emit stop typing
+    emit('typing:stop', { receiverId: userId });
+
+    const optimisticId = `optimistic-${Date.now()}`;
+    const optimistic = {
+      _id: optimisticId,
+      content: contentStr,
+      senderId: user?._id,
+      receiverId: userId,
+      createdAt: new Date().toISOString(),
+    };
+
+    setMessages((prev) => [...prev, optimistic]);
+
     try {
-      emit('message:send', msgData);
-      await api.post('/messages', msgData);
-    } catch {
-      // optimistic, ignore
+      const { data } = await api.post('/messages', {
+        receiverId: userId,
+        content: contentStr,
+      });
+
+      // Update optimistic message with real message
+      setMessages((prev) =>
+        prev.map((m) => (m._id === optimisticId ? data.message : m))
+      );
+
+      // Refresh conversations list to update latest msg
+      fetchConversations();
+    } catch (err) {
+      console.error('Failed to send message:', err);
+      // Remove optimistic message on error
+      setMessages((prev) => prev.filter((m) => m._id !== optimisticId));
     }
+  };
+
+  // Handle typing input trigger
+  const handleInputChange = (e) => {
+    setNewMsg(e.target.value);
+    if (!userId) return;
+
+    // Send typing start
+    emit('typing:start', { receiverId: userId });
+
+    // Set timeout to clear typing stop after 2s of no input
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      emit('typing:stop', { receiverId: userId });
+    }, 2000);
   };
 
   const chatPartner = conversations.find((c) => c.userId === userId) || { name: 'Neighbor' };
@@ -71,16 +162,23 @@ export default function Messages() {
         <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface">Conversations</h2>
       </div>
       <div className="flex-1 overflow-y-auto divide-y divide-outline-variant/10">
+        {conversationsLoading && conversations.length === 0 && (
+          <div className="text-center py-8 text-outline text-xs">Loading conversations...</div>
+        )}
+        {!conversationsLoading && conversations.length === 0 && (
+          <div className="text-center py-8 text-outline text-xs">No active chats yet.</div>
+        )}
         {conversations.map((conv) => {
           const isActive = conv.userId === userId;
           const partnerInitials = conv.name.charAt(0).toUpperCase();
+          const unreadNum = parseInt(conv.unread) || 0;
           return (
             <button
               key={conv.userId}
               onClick={() => navigate(`/messages/${conv.userId}`)}
               className={`w-full flex items-center gap-3 px-4 py-4 transition-colors text-left ${isActive ? 'bg-[#F3F5F4]' : 'hover:bg-[#F3F5F4]/50'}`}
             >
-              <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary shrink-0">
+              <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary shrink-0 overflow-hidden">
                 {conv.avatar ? (
                   <img src={conv.avatar} alt={conv.name} className="w-full h-full object-cover rounded-full" />
                 ) : (
@@ -89,13 +187,13 @@ export default function Messages() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-bold text-sm text-on-surface">{conv.name}</p>
-                <p className="text-xs text-outline truncate mt-0.5">{conv.lastMessage}</p>
+                <p className="text-xs text-outline truncate mt-0.5">{conv.lastMessage || 'Sent a message'}</p>
               </div>
               <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                <span className="text-[10px] text-outline font-medium">{conv.time}</span>
-                {conv.unread > 0 && (
+                <span className="text-[10px] text-outline font-medium">{formatTime(conv.time)}</span>
+                {unreadNum > 0 && (
                   <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold bg-primary">
-                    {conv.unread}
+                    {unreadNum}
                   </span>
                 )}
               </div>
@@ -108,6 +206,8 @@ export default function Messages() {
 
   return (
     <AppLayout noRightPanel rightPanel={null}>
+      <TopBar />
+
       {/* Desktop dual pane layout */}
       <div className="hidden md:grid grid-cols-12 gap-6 h-[calc(100vh-64px)] p-6 md:pt-20">
         <div className="col-span-4 h-full">
@@ -118,7 +218,7 @@ export default function Messages() {
           {userId ? (
             <>
               <div className="px-6 py-4 border-b border-outline-variant/10 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary">
+                <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary overflow-hidden shrink-0">
                   {chatPartner.avatar ? (
                     <img src={chatPartner.avatar} alt={chatPartner.name} className="w-full h-full object-cover rounded-full" />
                   ) : (
@@ -152,20 +252,27 @@ export default function Messages() {
                     <div key={msg._id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
                       <div className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm ${isMine ? 'bg-primary text-on-primary rounded-br-sm shadow-sm' : 'bg-surface-container-high text-on-surface rounded-bl-sm border border-outline-variant/10'}`}>
                         <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
-                        <p className={`text-[9px] mt-1 text-right opacity-70`}>
+                        <p className="text-[9px] mt-1 text-right opacity-70">
                           {formatTime(msg.createdAt)}
                         </p>
                       </div>
                     </div>
                   );
                 })}
+                {partnerTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-surface-container-high text-on-surface-variant rounded-2xl rounded-bl-sm px-4 py-2 text-xs italic">
+                      Typing...
+                    </div>
+                  </div>
+                )}
                 <div ref={messagesEndRef} />
               </div>
 
               <div className="p-4 border-t border-outline-variant/10 flex items-center gap-3">
                 <input
                   value={newMsg}
-                  onChange={(e) => setNewMsg(e.target.value)}
+                  onChange={handleInputChange}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                   placeholder="Type a message..."
                   className="w-full bg-[#F3F5F4] border-none rounded-xl py-3 px-4 font-body-sm text-body-sm focus:ring-2 focus:ring-primary transition-all text-on-surface flex-1"
@@ -173,7 +280,7 @@ export default function Messages() {
                 <button
                   onClick={sendMessage}
                   disabled={!newMsg.trim()}
-                  className="w-11 h-11 bg-primary text-on-primary rounded-xl flex items-center justify-center disabled:opacity-50 flex-shrink-0 active:scale-95 transition-all"
+                  className="w-11 h-11 bg-primary text-on-primary rounded-xl flex items-center justify-center disabled:opacity-50 flex-shrink-0 active:scale-95 transition-all text-white"
                 >
                   <span className="material-symbols-outlined">send</span>
                 </button>
@@ -192,20 +299,26 @@ export default function Messages() {
       </div>
 
       {/* Mobile single pane view */}
-      <div className="md:hidden flex flex-col h-[calc(100vh-64px)] pb-16">
+      <div className="md:hidden flex flex-col h-[calc(100vh-64px)] pb-16 pt-16">
         {!userId ? (
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="px-4 py-4 border-b border-outline-variant/10 flex-shrink-0 bg-surface-container-lowest">
               <h1 className="font-headline-md text-headline-sm font-bold text-on-surface">Messages</h1>
             </div>
             <div className="flex-1 overflow-y-auto divide-y divide-outline-variant/10 bg-surface-container-lowest">
+              {conversationsLoading && conversations.length === 0 && (
+                <div className="text-center py-8 text-outline text-xs">Loading conversations...</div>
+              )}
+              {!conversationsLoading && conversations.length === 0 && (
+                <div className="text-center py-8 text-outline text-xs">No active chats yet.</div>
+              )}
               {conversations.map((conv) => (
                 <button
                   key={conv.userId}
                   onClick={() => navigate(`/messages/${conv.userId}`)}
                   className="w-full flex items-center gap-3 px-4 py-4 hover:bg-[#F3F5F4]/50 transition-colors text-left"
                 >
-                  <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary shrink-0 overflow-hidden">
                     {conv.avatar ? (
                       <img src={conv.avatar} alt={conv.name} className="w-full h-full object-cover rounded-full" />
                     ) : (
@@ -214,11 +327,11 @@ export default function Messages() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-sm text-on-surface">{conv.name}</p>
-                    <p className="text-xs text-outline truncate mt-0.5">{conv.lastMessage}</p>
+                    <p className="text-xs text-outline truncate mt-0.5">{conv.lastMessage || 'Sent a message'}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                    <span className="text-[10px] text-outline font-medium">{conv.time}</span>
-                    {conv.unread > 0 && (
+                    <span className="text-[10px] text-outline font-medium">{formatTime(conv.time)}</span>
+                    {parseInt(conv.unread) > 0 && (
                       <span className="w-5 h-5 rounded-full flex items-center justify-center text-white text-[10px] font-bold bg-primary">
                         {conv.unread}
                       </span>
@@ -237,7 +350,7 @@ export default function Messages() {
               >
                 <span className="material-symbols-outlined">arrow_back</span>
               </button>
-              <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary text-xs">
+              <div className="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-bold text-primary text-xs overflow-hidden shrink-0">
                 {chatPartner.avatar ? (
                   <img src={chatPartner.avatar} alt={chatPartner.name} className="w-full h-full object-cover rounded-full" />
                 ) : (
@@ -263,20 +376,27 @@ export default function Messages() {
                   <div key={msg._id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
                     <div className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm ${isMine ? 'bg-primary text-on-primary rounded-br-sm shadow-sm' : 'bg-surface-container-high text-on-surface rounded-bl-sm border border-outline-variant/10'}`}>
                       <p className="leading-relaxed whitespace-pre-wrap">{msg.content}</p>
-                      <p className={`text-[9px] mt-1 text-right opacity-70`}>
+                      <p className="text-[9px] mt-1 text-right opacity-70">
                         {formatTime(msg.createdAt)}
                       </p>
                     </div>
                   </div>
                 );
               })}
+              {partnerTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-surface-container-high text-on-surface-variant rounded-2xl rounded-bl-sm px-4 py-2 text-xs italic">
+                    Typing...
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
 
             <div className="p-3 border-t border-outline-variant/10 bg-surface-container-lowest flex items-center gap-2 flex-shrink-0">
               <input
                 value={newMsg}
-                onChange={(e) => setNewMsg(e.target.value)}
+                onChange={handleInputChange}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                 placeholder="Type a message..."
                 className="w-full bg-[#F3F5F4] border-none rounded-xl py-3 px-4 font-body-sm text-body-sm focus:ring-2 focus:ring-primary transition-all text-on-surface flex-1"
@@ -284,7 +404,7 @@ export default function Messages() {
               <button
                 onClick={sendMessage}
                 disabled={!newMsg.trim()}
-                className="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center disabled:opacity-50 flex-shrink-0 active:scale-95 transition-all"
+                className="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center disabled:opacity-50 flex-shrink-0 active:scale-95 transition-all text-white"
               >
                 <span className="material-symbols-outlined">send</span>
               </button>

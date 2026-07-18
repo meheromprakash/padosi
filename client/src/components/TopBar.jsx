@@ -1,10 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useSocket } from '../hooks/useSocket';
 
 export default function TopBar() {
   const { user } = useAuth();
+  const { notifications } = useSocket();
   const navigate = useNavigate();
   const initials = (user?.firstName || 'U').charAt(0).toUpperCase();
+
+  // Filter unread notifications from socket context
+  const unreadCount = (notifications || []).filter((n) => !n.isRead).length;
 
   return (
     <>
@@ -23,10 +28,16 @@ export default function TopBar() {
         </div>
         <div className="flex items-center gap-stack-md ml-stack-md">
           <button 
-            onClick={() => navigate('/alerts')}
-            className="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors"
+            onClick={() => navigate('/notifications')}
+            className="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full transition-colors relative"
+            title="Notifications"
           >
-            <span className="material-symbols-outlined">notifications_active</span>
+            <span className="material-symbols-outlined">notifications</span>
+            {unreadCount > 0 && (
+              <span className="absolute top-1 right-1 min-w-[16px] h-4 bg-primary text-white text-[9px] font-bold rounded-full flex items-center justify-center px-1">
+                {unreadCount}
+              </span>
+            )}
           </button>
           <button 
             onClick={() => navigate('/profile')}
@@ -63,10 +74,16 @@ export default function TopBar() {
             <span className="material-symbols-outlined">search</span>
           </button>
           <button 
-            onClick={() => navigate('/alerts')}
-            className="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full"
+            onClick={() => navigate('/notifications')}
+            className="w-9 h-9 flex items-center justify-center text-on-surface-variant hover:bg-surface-container-highest rounded-full relative"
+            title="Notifications"
           >
             <span className="material-symbols-outlined">notifications</span>
+            {unreadCount > 0 && (
+              <span className="absolute top-1 right-1 min-w-[14px] h-3.5 bg-primary text-white text-[8px] font-bold rounded-full flex items-center justify-center px-0.5">
+                {unreadCount}
+              </span>
+            )}
           </button>
           <div 
             onClick={() => navigate('/profile')}

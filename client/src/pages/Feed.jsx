@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Newspaper } from 'lucide-react';
 import TopBar from '../components/TopBar';
 import FeedCard from '../components/FeedCard';
@@ -20,36 +20,24 @@ const FILTER_CHIPS = [
 ];
 
 export default function Feed() {
-  const { posts: apiPosts, loading, error, createPost, reactToPost, deletePost, refresh } = useFeed();
   const [filter, setFilter] = useState('all');
+  const { posts, loading, error, hasMore, fetchFeed, createPost, reactToPost, deletePost, toggleBookmark, updatePost, refresh } = useFeed(filter);
   const [showComposer, setShowComposer] = useState(false);
 
-  // Fallback mock posts if api empty
-  const MOCK_POSTS = [
-    {
-      _id: 'mock-1',
-      author: { firstName: 'Rohit Sharma', verification: { verified: true }, avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAQoCKFKjhzAyW5H7ZiWe3KclzB7weKTvXwCHUtQ8rIho4PPnTNN883C6gEIUwDkWPVhSRmwrFYfR1LLvC5gTmYvc5TgFjzrisDN-alelp--sJZjKuv6XlfjtNvQoGdHgF6pGCGsfN57IyDDT8JLBIgv6uE_LjYGvFKXBW6UZKpOswXHEib-7sJSYf_8tNhYLCXlLUjYV9ETxu0S5aLXyO5wAoHS17gelvVZwBSdrsCX8tzd8LREC-vjI87k985ylwoz-oxG51r_UY' },
-      locality: { name: 'Greenwood Estates' },
-      content: `Hi neighbors! Does anyone have a reliable plumber they could recommend for some leak repairs in C-block? Looking for someone who can visit by tomorrow morning. Thanks in advance!`,
-      category: 'recommendation',
-      reactions: { like: 12 },
-      commentsCount: 5,
-      createdAt: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-    },
-    {
-      _id: 'mock-2',
-      author: { firstName: 'Society Guard', verification: { verified: true } },
-      locality: { name: 'Greenwood Estates' },
-      content: `A motorcycle theft was reported near D-block parking today around 4:00 PM. Neighbors are advised to double-check their security cameras and ensure vehicles are locked. Police have been notified.`,
-      category: 'alert',
-      reactions: { like: 8 },
-      commentsCount: 2,
-      createdAt: new Date(Date.now() - 1000 * 60 * 24).toISOString(),
-    }
-  ];
-
-  const posts = apiPosts.length > 0 ? apiPosts : MOCK_POSTS;
-  const filtered = filter === 'all' ? posts : posts.filter((p) => p.category === filter);
+  // Infinite scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (loading || !hasMore) return;
+      const threshold = 150; // px from bottom
+      const totalHeight = document.documentElement.scrollHeight;
+      const scrolled = window.innerHeight + window.scrollY;
+      if (totalHeight - scrolled < threshold) {
+        fetchFeed(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading, hasMore, fetchFeed]);
 
   return (
     <AppLayout>
@@ -97,10 +85,10 @@ export default function Feed() {
         </div>
 
         {/* Feed Posts */}
-        {loading && <LoadingSkeleton type="card" count={3} />}
+        {loading && posts.length === 0 && <LoadingSkeleton type="card" count={3} />}
         {error && <ErrorState message={error} onRetry={refresh} />}
         
-        {!loading && !error && filtered.length === 0 && (
+        {!loading && !error && posts.length === 0 && (
           <EmptyState
             icon={Newspaper}
             title="Nothing here yet"
@@ -109,16 +97,24 @@ export default function Feed() {
           />
         )}
 
-        {!loading && !error && (
+        {posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            {filtered.map((post) => (
+            {posts.map((post) => (
               <FeedCard
                 key={post._id}
                 post={post}
                 onReact={(id, r) => reactToPost(id, r)}
+                onBookmark={(id, isBookmarked) => toggleBookmark(id, isBookmarked)}
+                onUpdate={(id, updates) => updatePost(id, updates)}
                 onDelete={(id) => deletePost(id)}
               />
             ))}
+          </div>
+        )}
+
+        {loading && posts.length > 0 && (
+          <div className="text-center py-4 text-outline text-sm">
+            Loading more posts...
           </div>
         )}
       </div>
@@ -138,3 +134,4 @@ export default function Feed() {
     </AppLayout>
   );
 }
+

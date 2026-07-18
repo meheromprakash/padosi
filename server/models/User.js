@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Indexes
-userSchema.index({ email: 1 });
 userSchema.index({ localityId: 1 });
 
 // Methods

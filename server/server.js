@@ -11,6 +11,10 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const feedRoutes = require('./routes/feed');
+const postRoutes = require('./routes/posts');
+const bookmarkRoutes = require('./routes/bookmarks');
+const notificationRoutes = require('./routes/notifications');
+const reportRoutes = require('./routes/reports');
 const alertRoutes = require('./routes/alerts');
 const listingRoutes = require('./routes/listings');
 const businessRoutes = require('./routes/businesses');
@@ -71,6 +75,10 @@ app.get('/health', (_req, res) => res.json({
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/feed', feedRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/reports', reportRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/businesses', businessRoutes);
@@ -88,8 +96,17 @@ const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => {
+  .then(async () => {
     console.log('✅ MongoDB connected');
+    
+    try {
+      const status = await mongoose.connection.db.admin().command({ hello: 1 });
+      global.supportsTransactions = !!status.setName;
+    } catch (err) {
+      global.supportsTransactions = false;
+    }
+    console.log(`📡 Transactions supported: ${global.supportsTransactions}`);
+
     server.listen(PORT, () => {
       console.log(`🚀 Padosi server running on port ${PORT}`);
       console.log(`📡 Socket.io enabled`);

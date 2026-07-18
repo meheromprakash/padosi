@@ -37,22 +37,6 @@ module.exports = (io) => {
       io.to(`locality:${localityId}`).emit('users:online', Array.from(onlineUsers.keys()));
     }
 
-    // Direct messaging
-    socket.on('message:send', async (data) => {
-      const { receiverId, content } = data;
-      if (!receiverId || !content?.trim()) return;
-
-      const messagePayload = {
-        senderId: userId,
-        receiverId,
-        content: content.trim(),
-        createdAt: new Date().toISOString(),
-      };
-
-      // Deliver to receiver
-      io.to(`user:${receiverId}`).emit('message:receive', messagePayload);
-    });
-
     // Join locality room
     socket.on('join:locality', (lId) => {
       socket.join(`locality:${lId}`);

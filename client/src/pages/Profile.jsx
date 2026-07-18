@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import AppLayout from '../components/AppLayout';
 import Modal from '../components/Modal';
 import { useAuth } from '../hooks/useAuth';
 import { formatDate } from '../utils/dateUtils';
 import TopBar from '../components/TopBar';
+import FeedCard from '../components/FeedCard';
+import api from '../api/axios';
 
 export default function Profile() {
   const { user, logout, setupProfile } = useAuth();
@@ -12,14 +14,118 @@ export default function Profile() {
   const [editBio, setEditBio] = useState(user?.bio || '');
   const [saving, setSaving] = useState(false);
 
+  const [activeTab, setActiveTab] = useState('posts'); // 'posts' or 'bookmarks'
+  const [posts, setPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [postsError, setPostsError] = useState(null);
+
+  const fileInputRef = useRef(null);
+
   const handleSave = async () => {
     setSaving(true);
     const fd = new FormData();
     fd.append('firstName', editName);
     fd.append('bio', editBio);
+    const res = await setupProfile(fd);
+    setSaving(false);
+    if (res?.success !== false) {
+      setShowEdit(false);
+    }
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSaving(true);
+    const fd = new FormData();
+    fd.append('avatar', file);
     await setupProfile(fd);
     setSaving(false);
-    setShowEdit(false);
+  };
+
+  const fetchUserContent = useCallback(async () => {
+    if (!user?._id) return;
+    setPostsLoading(true);
+    setPostsError(null);
+    try {
+      if (activeTab === 'posts') {
+        const { data } = await api.get(`/feed?authorId=${user._id}`);
+        setPosts(data.posts || []);
+      } else {
+        const { data } = await api.get('/bookmarks');
+        setPosts(data.posts || []);
+      }
+    } catch (err) {
+      setPostsError(err.response?.data?.message || 'Failed to load content');
+    } finally {
+      setPostsLoading(false);
+    }
+  }, [user?._id, activeTab]);
+
+  useEffect(() => {
+    fetchUserContent();
+  }, [fetchUserContent]);
+
+  const handleReact = async (postId, reaction) => {
+    try {
+      const { data } = await api.post(`/posts/${postId}/react`, { reaction });
+      setPosts((prev) =>
+        prev.map((p) =>
+          p._id === postId
+            ? { ...p, reactions: data.reactions, userReaction: data.userReaction }
+            : p
+        )
+      );
+    } catch (err) {
+      console.error('Failed to react to post:', err);
+    }
+  };
+
+  const handleBookmark = async (postId, isCurrentlyBookmarked) => {
+    setPosts((prev) =>
+      prev.map((p) =>
+        p._id === postId ? { ...p, userBookmarked: !isCurrentlyBookmarked } : p
+      )
+    );
+    if (activeTab === 'bookmarks' && isCurrentlyBookmarked) {
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    }
+    try {
+      if (isCurrentlyBookmarked) {
+        await api.delete(`/bookmarks/${postId}`);
+      } else {
+        await api.post(`/bookmarks/${postId}`);
+      }
+    } catch (err) {
+      setPosts((prev) =>
+        prev.map((p) =>
+          p._id === postId ? { ...p, userBookmarked: isCurrentlyBookmarked } : p
+        )
+      );
+    }
+  };
+
+  const handleUpdate = async (postId, updates) => {
+    try {
+      const { data } = await api.put(`/posts/${postId}`, updates);
+      setPosts((prev) => prev.map((p) => p._id === postId ? data.post : p));
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: err.response?.data?.message };
+    }
+  };
+
+  const handleDelete = async (postId) => {
+    try {
+      await api.delete(`/posts/${postId}`);
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.error('Failed to delete post:', err);
+    }
   };
 
   const displayUser = user || {
@@ -58,12 +164,24 @@ export default function Profile() {
                     initials
                   )}
                 </div>
-                <button className="absolute bottom-0 right-0 w-7 h-7 bg-primary text-on-primary rounded-full flex items-center justify-center border-2 border-white shadow-sm hover:opacity-90 transition-all">
+                <button 
+                  onClick={handleAvatarClick}
+                  disabled={saving}
+                  className="absolute bottom-0 right-0 w-7 h-7 bg-primary text-on-primary rounded-full flex items-center justify-center border-2 border-white shadow-sm hover:opacity-90 transition-all disabled:opacity-50"
+                  title="Upload Avatar"
+                >
                   <span className="material-symbols-outlined text-[16px]">photo_camera</span>
                 </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleAvatarChange}
+                  accept="image/*"
+                  className="hidden"
+                />
               </div>
               <button
-                onClick={() => setShowEdit(true)}
+                onClick={() => { setEditName(user?.firstName || ''); setEditBio(user?.bio || ''); setShowEdit(true); }}
                 className="bg-[#F3F5F4] text-on-surface font-bold px-4 py-2 rounded-xl text-xs hover:bg-[#EAEAEA] active:scale-95 transition-all flex items-center gap-1.5"
               >
                 <span className="material-symbols-outlined text-[16px]">edit</span>
@@ -111,6 +229,58 @@ export default function Profile() {
             <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${displayUser.trustScore || 70}%` }} />
           </div>
           <p className="text-xs text-outline mt-3 leading-relaxed">Complete your profile details or verify your address to boost your trust score in the community.</p>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex border-b border-outline-variant/10 mt-2">
+          <button
+            onClick={() => setActiveTab('posts')}
+            className={`flex-1 py-3 text-sm font-bold border-b-2 transition-all ${
+              activeTab === 'posts'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-outline hover:text-on-surface'
+            }`}
+          >
+            My Posts
+          </button>
+          <button
+            onClick={() => setActiveTab('bookmarks')}
+            className={`flex-1 py-3 text-sm font-bold border-b-2 transition-all ${
+              activeTab === 'bookmarks'
+                ? 'border-primary text-primary'
+                : 'border-transparent text-outline hover:text-on-surface'
+            }`}
+          >
+            Saved Posts
+          </button>
+        </div>
+
+        {/* Tab Content / Posts list */}
+        <div className="flex flex-col gap-6">
+          {postsLoading && <div className="text-center text-outline text-sm py-4">Loading...</div>}
+          
+          {!postsLoading && postsError && (
+            <div className="text-center text-red-500 text-sm py-4">{postsError}</div>
+          )}
+
+          {!postsLoading && !postsError && posts.length === 0 && (
+            <div className="text-center text-outline text-sm py-8 bg-surface-container-lowest border border-outline-variant/10 rounded-2xl p-6">
+              {activeTab === 'posts' ? "You haven't posted anything yet." : "No saved posts yet."}
+            </div>
+          )}
+
+          {!postsLoading && !postsError && posts.length > 0 && (
+            posts.map((post) => (
+              <FeedCard
+                key={post._id}
+                post={post}
+                onReact={handleReact}
+                onBookmark={handleBookmark}
+                onUpdate={handleUpdate}
+                onDelete={handleDelete}
+              />
+            ))
+          )}
         </div>
 
         {/* Settings options */}
